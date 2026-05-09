@@ -379,7 +379,8 @@ if st.session_state.completed_steps:
             continue
         step_num, label, icon = NODE_LABELS[node_name]
         logs = node_output.get("step_log", [])
-        log_text = logs[-1] if logs else ""
+        raw_log = logs[-1] if logs else ""
+        log_text = raw_log.split("] ", 1)[-1] if "] " in raw_log else raw_log
 
         with st.expander(f"{icon} Step {step_num}: {label}", expanded=False):
             # Show the relevant output fields for this node
@@ -553,7 +554,8 @@ if st.session_state.final_state:
     # Audit log
     with st.expander("Full audit log", expanded=False):
         for entry in state.get("step_log", []):
-            st.markdown(f"- {entry}")
+            clean = entry.split("] ", 1)[-1] if "] " in entry else entry
+            st.markdown(f"- {clean}")
 
 
 # ── Recent Actions panel ───────────────────────────────────────────────────────
