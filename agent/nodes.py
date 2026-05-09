@@ -194,7 +194,6 @@ def calculate_risk(state: InvestigationState) -> dict:
     score = min(score, 100)
     risk_level = "low" if score <= 30 else ("medium" if score <= 65 else "high")
 
-    print(f"DEBUG calculate_risk → score={score}, level={risk_level}")
     return {
         "risk_score": float(score),
         "risk_level": risk_level,

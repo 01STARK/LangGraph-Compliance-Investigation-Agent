@@ -280,7 +280,6 @@ if run_btn and not st.session_state.awaiting_human:
             for k, v in sv.items():
                 if k == "step_log":
                     if len(v) > len(accumulated.get("step_log", [])):
-                        st.write("step_log in accumulated:", accumulated.get("step_log"))
                         accumulated["step_log"] = v
                 elif v not in (None, "", 0, 0.0, {}, []):
                     accumulated[k] = v
@@ -290,9 +289,6 @@ if run_btn and not st.session_state.awaiting_human:
             # unlike plain fields (risk_score) which may be 0.0 in the checkpoint.
             if accumulated.get("risk_score", 0.0) == 0.0:
                 import re as _re
-                st.write("accumulated risk_score:", accumulated.get("risk_score"))
-                st.write("step_log:", accumulated.get("step_log"))
-                st.write("snap.values:", snap.values if snap else None)
                 for _entry in accumulated.get("step_log", []):
                     _m = _re.search(r"\[calculate_risk\] Score: (\d+)/100 → (\w+)", _entry)
                     if _m:
